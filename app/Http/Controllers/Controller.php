@@ -21,6 +21,14 @@ class Controller extends BaseController
     	session()->flash('type','danger');
     }
 
+    public function setFileName($photo_file){
+		$file_basename = $photo_file->getClientOriginalName();
+		$file_basename = pathinfo($file_basename,PATHINFO_FILENAME);
+		$file_basename = str_replace(' ', '-', $file_basename);
+		$extension = $photo_file->extension();;
+		$file_modify_name = $file_basename.'_'.time().'.'. $extension;
+		return $file_modify_name ;
+    }
 
 
 

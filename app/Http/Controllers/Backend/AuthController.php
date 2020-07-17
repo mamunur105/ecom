@@ -7,8 +7,11 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Validator;
 
-use App\User;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+
+use Illuminate\Support\Facades\Storage;
+
 class AuthController extends Controller
 {
 
@@ -32,20 +35,11 @@ class AuthController extends Controller
 		       ->withErrors($validator)
 		       ->withInput();
 		}
-
-		// $data = [
-		// 	'email' => strtolower($request->input('useremail')) ,
-		// 	'password' => bcrypt($request->input('password')) 
-		// ];
-
 		$credentials = $request->except(['_token']);
-		
 		if (auth()->attempt($credentials)) {
 			return redirect()->route('homepage');
 		}
-
 		$this->setErrorMessage('Login Invalid');
-	  
 	  	return redirect()->back();
     }
 
@@ -60,11 +54,6 @@ class AuthController extends Controller
 	}
 
 	function register(Request $request){
-
-		// validation
-		// error handaling
-		// save Data
-
 		$validator = Validator::make($request->all(),[
 		 'name'  => 'required',
 		 'useremail' => 'required|email|unique:users,email',
@@ -82,22 +71,24 @@ class AuthController extends Controller
 		       ->back()
 		       ->withErrors($validator)
 		       ->withInput();
-		}
-
+		}		
+		// $url = Storage::url('file.jpg');
 		$data = [
 			'name' => $request->input('name') ,
-			'email' => strtolower($request->input('useremail')) ,
+			'email' => strtolower(trim($request->input('useremail'))) ,
 			'address' => $request->input('address') ,
 			'city' => $request->input('city') ,
 			'state' => $request->input('choosestate') ,
 			'zipcode' => $request->input('zipcode') ,
-			'photo' => 'Photo', 
-			'password' => bcrypt($request->input('password')) ,
-			
+			'password' => bcrypt($request->input('password')) ,	
 		];
-
+		if ($request->hasFile('photo')) {
+			$photo_file = $request->file('photo');
+			$file_modify_name = $this->setFileName($photo_file);
+			$photo_file->storeAs('images', $file_modify_name);
+			$data['photo'] = $file_modify_name;
+		}
 		try{
-			
 			User::create($data);
 			$this->setSuccessMessage('User account created');
 			return redirect()->route('loginForm');
