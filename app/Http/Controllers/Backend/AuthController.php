@@ -35,9 +35,10 @@ class AuthController extends Controller
 		       ->withErrors($validator)
 		       ->withInput();
 		}
+		
 		$credentials = $request->except(['_token']);
 		if (auth()->attempt($credentials)) {
-			return redirect()->route('homepage');
+			return redirect()->route('dashbord');
 		}
 		$this->setErrorMessage('Login Invalid');
 	  	return redirect()->back();
@@ -102,5 +103,7 @@ class AuthController extends Controller
 	
 	}
 
-
+	function dashboard(){
+		return view("Backend/dashboard");
+	}
 }

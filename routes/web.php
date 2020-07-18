@@ -27,3 +27,4 @@ Route::post('/registration','Backend\AuthController@register')->name('register')
 Route::get('/profile','Backend\AuthController@registrationForm')->name('profile');
 Route::get('/logout','Backend\AuthController@logout')->name('logout');
 
+Route::get('/dashbord','Backend\AuthController@dashboard')->name('dashbord');
