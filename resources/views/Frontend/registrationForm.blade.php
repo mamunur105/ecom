@@ -24,7 +24,7 @@
         </div>
     @endif
 
-    <form method="post" action="{{ route('register') }}" enctype="multipart/form-data">
+    <form method="post" action="{{ route('registrationForm') }}" enctype="multipart/form-data">
         @csrf 
         <div class="form-row">
              <div class="form-group col-md-6">

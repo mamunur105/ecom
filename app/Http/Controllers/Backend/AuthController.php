@@ -104,6 +104,8 @@ class AuthController extends Controller
 	}
 
 	function dashboard(){
-		return view("Backend/dashboard");
+		$data = [];
+		$data['user'] = Auth::user();
+		return view("Backend/dashboard")->with($data);
 	}
 }

@@ -35,7 +35,7 @@
                         </div>
                     @endif
 
-                    <form method="post" action="{{ route('login') }}">
+                    <form method="post" action="{{ route('loginForm') }}">
                         @csrf 
                         <div class="form-group">
                             <label for="exampleInputEmail1">Email address</label>
