@@ -42,6 +42,7 @@
             <div class="col-12">
                 <div class="page-title-box">
                     <h2>Categories</h2>
+
                 </div>
             </div>
         </div>     
@@ -49,8 +50,30 @@
 
         <div class="row">
             <div class="col-md-4">
-                <form action="#">
-                    
+                  @if(session()->has('message'))
+                        <div class="alert alert-{{ session('type') }}">
+                            {{ session('message') }}
+                        </div>
+                    @endif
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                <form action="{{ route('category.add') }}"  method="post">
+                    @csrf
+                    <div class="form-group">
+                        <label for="category_name">Caregory Name</label>
+                        <input name="category-name" type="text" class="form-control" id="category_name" placeholder="Name">
+                    </div>
+                      <div class="form-group">
+                        <button type="submit" class="btn btn-primary mb-2">Add Category</button>
+                    </div>
+                   
                 </form>
             </div>
             <div class="col-md-8">
