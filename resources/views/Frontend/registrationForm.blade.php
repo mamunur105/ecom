@@ -10,11 +10,17 @@
     <h2 class="text-center pb-5 pt-5">Registeration Form</h2>
     @if ($errors->any())
         <div class="alert alert-danger">
-            <ul>
+            @if(2 > count($errors->all()))
                 @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
+                    {{ $error }}
                 @endforeach
-            </ul>
+            @else
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            @endif
         </div>
     @endif
 

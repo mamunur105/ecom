@@ -9,9 +9,12 @@ use App\Models\Category;
 class CategoryController extends Controller
 {
     function category(){
-    	return view('Backend/category');
+    	$data = [] ;
+    	$data['categories'] = Category::all();
+    	return view('Backend/category')->with($data);
     }
-    function create(Request $request){
+
+    function create( Request $request ){
     	$validator = Validator::make($request->all(),[
 		 'category-name' => 'required|unique:categories,name',
 		], [
@@ -44,8 +47,56 @@ class CategoryController extends Controller
 
 		}
     }
+
     function show(){}
-    function edit(){}
-    function update(){}
-    function delete(){}
+
+    function edit( $id ){
+    	$data = [] ;
+    	$data['category'] = Category::select('id','name','slug')->find($id);
+    	return view('Backend/category_edit')->with($data);
+    }
+
+    function update( $id, Request $request ){
+    	$validator = Validator::make($request->all(),[
+		 'category-name' => 'required|unique:categories,name,'.$id,
+		], [
+		  'category-name.required' => 'Name is required.'
+		]);
+
+		if ($validator->fails()) {
+		 return redirect()
+		       ->back()
+		       ->withErrors($validator)
+		       ->withInput();
+		}		
+		// $url = Storage::url('file.jpg');
+		$name = trim($request->input('category-name'));
+		$slug = str_replace(' ', '-', $name);
+		$data = [
+			'name' => $name,
+			'slug' => $slug
+		];
+		
+		try{
+			$category = Category::find($id);
+			$category->update($data);
+			$this->setSuccessMessage('Category Updated');
+			return redirect()->route('category');
+
+		}catch(Exception $e){
+			
+			$this->setErrorMessage($e->getMessage());
+			return redirect()->back();
+
+		}
+    }
+
+    function delete( $id){
+    	$category = Category::find($id);
+    	$category->delete();
+    	$this->setSuccessMessage('Category Deleted');
+    	return redirect()->route('category');
+
+    }
+
 }

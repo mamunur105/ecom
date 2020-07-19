@@ -57,18 +57,27 @@
                     @endif
                     @if ($errors->any())
                         <div class="alert alert-danger">
-                            <ul>
+                            @if(2 > count($errors->all()))
+
                                 @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
+                                    {{ $error }}
                                 @endforeach
-                            </ul>
+
+                            @else
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            @endif
+                            
                         </div>
                     @endif
                 <form action="{{ route('category.add') }}"  method="post">
                     @csrf
                     <div class="form-group">
                         <label for="category_name">Caregory Name</label>
-                        <input name="category-name" type="text" class="form-control" id="category_name" placeholder="Name">
+                        <input name="category-name" type="text" class="form-control" id="category_name" placeholder="Name" value="{{ old('category_name') }}">
                     </div>
                       <div class="form-group">
                         <button type="submit" class="btn btn-primary mb-2">Add Category</button>
@@ -104,16 +113,18 @@
                                         </th>
                                         <th>Category</th>
                                         <th>Slug</th>
-
-                                        <th class="d-none">none</th>
-                                        <th class="d-none">none</th>
-                                        <th class="d-none">none</th>
-
-                                        <th>Status</th>
+                                        <th class="d-none" >Status</th>
                                         <th style="width: 85px;">Action</th>
+
+                                        <th class="d-none">none</th>
+                                        <th class="d-none">none</th>
+                                        <th class="d-none">none</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    
+                                    @foreach($categories as $cat)
                                     <tr>
                                         <td>
                                             <div class="custom-control custom-checkbox">
@@ -121,29 +132,32 @@
                                                 <label class="custom-control-label" for="customCheck2">&nbsp;</label>
                                             </div>
                                         </td>
+                                        <td>  {{ $cat->name }}  </td>
+                                        <td> {{ $cat->slug }} </td>
                                         
-                                        <td>
-                                            Aeron Chairs
+                                        <td class="d-none">
+                                            <span class="badge badge-success">{{ $cat->status }}</span>
                                         </td>
-                                       
-                                        <td>
-                                            SLug
-                                        </td>
-                                        <td class="d-none">none</td>
-                                        <td class="d-none">none</td>
-                                        <td class="d-none">none</td>
-    
-                                   
-                                        <td>
-                                            <span class="badge badge-success">Status</span>
-                                        </td>
-    
                                         <td class="table-action">
-                                            <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-eye"></i></a>
-                                            <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
-                                            <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
+                                            <a href="{{ route('category.edit',$cat->id) }}" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                            <!-- <a href="{{ route('category.delete',$cat->id) }}" class="action-icon"> <i class="mdi mdi-delete"></i></a> -->
+                                            <span>
+                                                <form method="post" action="{{ route('category.delete',$cat->id) }}">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button type="submit" class="btn btn-danger mb-2">
+                                                        <i class="mdi mdi-delete"></i>
+                                                    </button>
+                                                </form>
+                                            </span>
                                         </td>
+
+                                        <td class="d-none">none</td>
+                                        <td class="d-none">none</td>
+                                        <td class="d-none">none</td>
+    
                                     </tr>
+                                    @endforeach
                                    
                                 </tbody>
 
