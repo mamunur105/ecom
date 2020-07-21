@@ -24,7 +24,7 @@ Route::post('/login','Backend\AuthController@login');
 Route::get('/registration','Backend\AuthController@registrationForm')->name('registrationForm');
 Route::post('/registration','Backend\AuthController@register');
 
-// Route::get('/profile','Backend\AuthController@registrationForm')->name('profile');
+Route::get('/profile','Backend\AuthController@registrationForm')->name('profile');
 Route::get('/logout','Backend\AuthController@logout')->name('logout');
 
 // With A Route Closure...
