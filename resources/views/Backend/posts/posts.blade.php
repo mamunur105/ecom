@@ -4,7 +4,7 @@
 
 @section('stylesheet')       
     <!-- third party css -->
-    <link href="{{ asset('assets/backend/css/vendor/dataTables.bootstrap4.css') }}" rel="stylesheet" type="text/css" />
+    <!-- <link href="{{ asset('assets/backend/css/vendor/dataTables.bootstrap4.css') }}" rel="stylesheet" type="text/css" /> -->
     <link href="{{ asset('assets/backend/css/vendor/responsive.bootstrap4.css') }}" rel="stylesheet" type="text/css" />
     <!-- third party css end -->
     <!-- App css -->
@@ -18,14 +18,14 @@
     <script src="{{ asset('assets/backend/js/vendor.min.js')}}"></script>
     <script src="{{ asset('assets/backend/js/app.min.js')}}"></script>
     <!-- third party js -->
-    <script src="{{ asset('assets/backend/js/vendor/jquery.dataTables.min.js') }}"></script>
+<!--     <script src="{{ asset('assets/backend/js/vendor/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/backend/js/vendor/dataTables.bootstrap4.js') }}"></script>
     <script src="{{ asset('assets/backend/js/vendor/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('assets/backend/js/vendor/responsive.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('assets/backend/js/vendor/dataTables.checkboxes.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/vendor/dataTables.checkboxes.min.js') }}"></script> -->
     <!-- third party js ends -->
     <!-- demo app -->
-    <script src="{{ asset('assets/backend/js/pages/demo.products.js') }}"></script>
+    <!-- <script src="{{ asset('assets/backend/js/pages/demo.products.js') }}"></script> -->
     <script>
         // $('#products-datatable').DataTable();
     </script>
@@ -41,7 +41,7 @@
         <div class="row py-2">
             <div class="col-12">
                 <div class="page-title-box">
-                    <h2>Categories</h2>
+                    <h2>Posts</h2>
 
                 </div>
             </div>
@@ -80,24 +80,9 @@
                                     
                                 </div>
                             @endif
-                            <form action="{{ route('category.add') }}"  method="post">
-                                @csrf
-                                <div class="form-group">
-                                    <label for="category_name">Caregory Name</label>
-                                    <input name="category-name" type="text" class="form-control" id="category_name" placeholder="Name" value="{{ old('category_name') }}">
-                                </div>
-                                  <div class="form-group">
-                                    <button type="submit" class="btn btn-primary mb-2">Add Category</button>
-                                </div>
-                               
-                            </form>
-
+                         
 
                         </div>
-
-
-
-
 
                         <div class="row mb-2">
                             <div class="col-sm-4">
@@ -113,66 +98,51 @@
                         </div>
 
                         <div class="table-responsive">
-                            <table class="table table-centered w-100 dt-responsive nowrap" id="products-datatable">
-                                <thead class="thead-light">
+                            
+                            <table class="table table-centered mb-0">
+                                <thead>
                                     <tr>
-                                        <th class="all" style="width: 20px;">
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                <label class="custom-control-label" for="customCheck1">&nbsp;</label>
-                                            </div>
-                                        </th>
+                                        <th style="width: 50px;" >Image</th>
+                                        <th>Title</th>
                                         <th>Category</th>
-                                        <th>Slug</th>
-                                        <th class="d-none" >Status</th>
-                                        <th style="width: 85px;">Action</th>
-
-                                        <th class="d-none">none</th>
-                                        <th class="d-none">none</th>
-                                        <th class="d-none">none</th>
-
+                                        <th>Author</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    
-                                    @foreach($categories as $cat)
+                                    @foreach($posts as $post)
                                     <tr>
+                                        <td><img width="80px"  src="{{ $post->thumbnail_path }}" alt=""></td>
+                                        <td>{{ $post->title }}</td>
+                                        <td>{{ $post->category->name }}</td>
+                                        <td>{{ $post->user->name }}</td>
+                                        <td>{{ $post->status }}</td>
                                         <td>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                                <label class="custom-control-label" for="customCheck2">&nbsp;</label>
+                                            <div class="d-flex">
+                                                <span>
+                                                    <a style="width: 50px;" href="{{ route('posts.edit',$post->id) }}" class="action-icon"> 
+                                                        <i class="mdi mdi-square-edit-outline"></i>
+                                                    </a>
+                                                </span>
+                                                <span>
+                                                    <form method="post" action="{{ route('posts.destroy',$post->id) }}">
+                                                        @csrf
+                                                        @method('delete')
+                                                        <button type="submit" class="btn btn-danger">
+                                                            <i class="mdi mdi-delete"></i>
+                                                        </button>
+                                                    </form>
+                                                </span>
                                             </div>
                                         </td>
-                                        <td>  {{ $cat->name }}  </td>
-                                        <td> {{ $cat->slug }} </td>
-                                        
-                                        <td class="d-none">
-                                            <span class="badge badge-success">{{ $cat->status }}</span>
-                                        </td>
-                                        <td class="table-action">
-                                            <a href="{{ route('category.edit',$cat->id) }}" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
-                                           
-                                            <span>
-                                                <form method="post" action="{{ route('category.delete',$cat->id) }}">
-                                                    @csrf
-                                                    @method('delete')
-                                                    <button type="submit" class="btn btn-danger mb-2">
-                                                        <i class="mdi mdi-delete"></i>
-                                                    </button>
-                                                </form>
-                                            </span>
-                                        </td>
-
-                                        <td class="d-none">none</td>
-                                        <td class="d-none">none</td>
-                                        <td class="d-none">none</td>
-    
                                     </tr>
                                     @endforeach
-                                   
-                                </tbody>
 
+
+                                </tbody>
                             </table>
+                            {!! $posts->links() !!}
                         </div>
                     </div> <!-- end card-body-->
                 </div> <!-- end card-->

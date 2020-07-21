@@ -57,7 +57,7 @@
                     @endif
                     @if ($errors->any())
                         <div class="alert alert-danger">
-                            @if(2 > count($errors->all()))
+                            @if(1 == count($errors->all()))
 
                                 @foreach ($errors->all() as $error)
                                     {{ $error }}

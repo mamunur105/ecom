@@ -46,8 +46,13 @@
                     <ul class="metismenu side-nav">
  						
                         <li class="side-nav-item">
-                            <a href="{{ route('category') }}" class="side-nav-link"><i class="uil-calender"></i>
+                            <a href="{{ route('category.index') }}" class="side-nav-link"><i class="uil-calender"></i>
                                 <span> Category </span>
+                            </a>
+                        </li>
+                        <li class="side-nav-item">
+                            <a href="{{ route('posts.index') }}" class="side-nav-link"><i class="uil-calender"></i>
+                                <span> Posta </span>
                             </a>
                         </li>
 
@@ -211,19 +216,19 @@
 				                        <div class="row no-gutters">
 				                            <div class="col">
 				                                <a class="dropdown-icon-item" href="#">
-				                                    <img src="assets/images/brands/slack.png" alt="slack">
+				                                    <img src="{{ asset('assets/backend/images/brands/slack.png')}}" alt="slack">
 				                                    <span>Slack</span>
 				                                </a>
 				                            </div>
 				                            <div class="col">
 				                                <a class="dropdown-icon-item" href="#">
-				                                    <img src="assets/images/brands/github.png" alt="Github">
+				                                    <img src="{{ asset('assets/backend/images/brands/github.png')}}" alt="Github">
 				                                    <span>GitHub</span>
 				                                </a>
 				                            </div>
 				                            <div class="col">
 				                                <a class="dropdown-icon-item" href="#">
-				                                    <img src="assets/images/brands/dribbble.png" alt="dribbble">
+				                                    <img src="{{ asset('assets/backend/images/brands/dribbble.png')}}" alt="dribbble">
 				                                    <span>Dribbble</span>
 				                                </a>
 				                            </div>
@@ -232,19 +237,19 @@
 				                        <div class="row no-gutters">
 				                            <div class="col">
 				                                <a class="dropdown-icon-item" href="#">
-				                                    <img src="assets/images/brands/bitbucket.png" alt="bitbucket">
+				                                    <img src="{{ asset('assets/backend/images/brands/bitbucket.png')}}" alt="bitbucket">
 				                                    <span>Bitbucket</span>
 				                                </a>
 				                            </div>
 				                            <div class="col">
 				                                <a class="dropdown-icon-item" href="#">
-				                                    <img src="assets/images/brands/dropbox.png" alt="dropbox">
+				                                    <img src="{{ asset('assets/backend/images/brands/dropbox.png')}}" alt="dropbox">
 				                                    <span>Dropbox</span>
 				                                </a>
 				                            </div>
 				                            <div class="col">
 				                                <a class="dropdown-icon-item" href="#">
-				                                    <img src="assets/images/brands/g-suite.png" alt="G Suite">
+				                                    <img src="{{ asset('assets/backend/images/brands/g-suite.png')}}" alt="G Suite">
 				                                    <span>G Suite</span>
 				                                </a>
 				                            </div>
@@ -360,7 +365,7 @@
 				                    <!-- item-->
 				                    <a href="javascript:void(0);" class="dropdown-item notify-item">
 				                        <div class="media">
-				                            <img class="d-flex mr-2 rounded-circle" src="assets/images/users/avatar-2.jpg" alt="Generic placeholder image" height="32">
+				                            <img class="d-flex mr-2 rounded-circle" src="{{ asset('assets/backend/images/users/avatar-2.jpg')}}" alt="Generic placeholder image" height="32">
 				                            <div class="media-body">
 				                                <h5 class="m-0 font-14">Erwin Brown</h5>
 				                                <span class="font-12 mb-0">UI Designer</span>
@@ -371,7 +376,7 @@
 				                    <!-- item-->
 				                    <a href="javascript:void(0);" class="dropdown-item notify-item">
 				                        <div class="media">
-				                            <img class="d-flex mr-2 rounded-circle" src="assets/images/users/avatar-5.jpg" alt="Generic placeholder image" height="32">
+				                            <img class="d-flex mr-2 rounded-circle" src="{{ asset('assets/backend/images/users/avatar-5.jpg')}}" alt="Generic placeholder image" height="32">
 				                            <div class="media-body">
 				                                <h5 class="m-0 font-14">Jacob Deo</h5>
 				                                <span class="font-12 mb-0">Developer</span>

@@ -41,7 +41,7 @@ class AuthController extends Controller
 			return redirect()->route('dashbord');
 		}
 		$this->setErrorMessage('Login Invalid');
-	  	return redirect()->back();
+	  	return redirect()->back()->withInput();
     }
 
     function logout(){

@@ -24,7 +24,7 @@ Route::post('/login','Backend\AuthController@login');
 Route::get('/registration','Backend\AuthController@registrationForm')->name('registrationForm');
 Route::post('/registration','Backend\AuthController@register');
 
-Route::get('/profile','Backend\AuthController@registrationForm')->name('profile');
+// Route::get('/profile','Backend\AuthController@registrationForm')->name('profile');
 Route::get('/logout','Backend\AuthController@logout')->name('logout');
 
 // With A Route Closure...
@@ -33,12 +33,15 @@ Route::get('/logout','Backend\AuthController@logout')->name('logout');
 
 Route::get('/dashbord','Backend\AuthController@dashboard')->name('dashbord');
 
-Route::get('/category','Backend\CategoryController@category')->name('category');
+Route::get('/category','Backend\CategoryController@index')->name('category.index');
 Route::post('/category/add','Backend\CategoryController@create')->name('category.add');
 Route::get('/category/{id}/','Backend\CategoryController@show')->name('category.show');
 Route::get('/category/{id}/edit','Backend\CategoryController@edit')->name('category.edit');
 Route::put('/category/{id}','Backend\CategoryController@update')->name('category.update');
 Route::delete('/category/{id}','Backend\CategoryController@delete')->name('category.delete');
 
+
+
+Route::resource('/posts','Backend\PostController');
 
 

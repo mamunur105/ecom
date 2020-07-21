@@ -27,11 +27,19 @@
                     @endif
                     @if ($errors->any())
                         <div class="alert alert-danger">
-                            <ul>
+                             @if(1 == count($errors->all()))
+
                                 @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
+                                    {{ $error }}
                                 @endforeach
-                            </ul>
+
+                            @else
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            @endif
                         </div>
                     @endif
 

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Category;
 class CategoryController extends Controller
 {
-    function category(){
+    function index(){
     	$data = [] ;
     	$data['categories'] = Category::all();
     	return view('Backend/category')->with($data);
@@ -29,7 +29,7 @@ class CategoryController extends Controller
 		}		
 		// $url = Storage::url('file.jpg');
 		$name = trim($request->input('category-name'));
-		$slug = str_replace(' ', '-', $name);
+		$slug = strtolower(str_replace(' ', '-', $name));
 		$data = [
 			'name' => $name,
 			'slug' => $slug
@@ -58,9 +58,10 @@ class CategoryController extends Controller
 
     function update( $id, Request $request ){
     	$validator = Validator::make($request->all(),[
-		 'category-name' => 'required|unique:categories,name,'.$id,
+		 'category-name' => 'required|unique:categories,name,',$id,
 		], [
-		  'category-name.required' => 'Name is required.'
+		  'category-name.required' => 'Name is required.',
+		  'category-name.unique' => 'Name Already taken.',
 		]);
 
 		if ($validator->fails()) {
@@ -71,7 +72,7 @@ class CategoryController extends Controller
 		}		
 		// $url = Storage::url('file.jpg');
 		$name = trim($request->input('category-name'));
-		$slug = str_replace(' ', '-', $name);
+		$slug = strtolower(str_replace(' ', '-', $name));
 		$data = [
 			'name' => $name,
 			'slug' => $slug
@@ -81,7 +82,7 @@ class CategoryController extends Controller
 			$category = Category::find($id);
 			$category->update($data);
 			$this->setSuccessMessage('Category Updated');
-			return redirect()->route('category');
+			return redirect()->route('category.index');
 
 		}catch(Exception $e){
 			
@@ -95,7 +96,7 @@ class CategoryController extends Controller
     	$category = Category::find($id);
     	$category->delete();
     	$this->setSuccessMessage('Category Deleted');
-    	return redirect()->route('category');
+    	return redirect()->route('category.index');
 
     }
 
