@@ -26,7 +26,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        // die();
+        return view('Backend.posts.post_add');
     }
 
     /**
@@ -48,7 +49,9 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = [] ;
+        // $data['posts'] = Post::with('category','user')->select('id','user_id','category_id','title','content','thumbnail_path','status')->where('category_id', $id)->paginate(10);
+        // return view('Backend.posts.posts')->with($data);
     }
 
     /**

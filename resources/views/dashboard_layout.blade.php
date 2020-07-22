@@ -50,10 +50,26 @@
                                 <span> Category </span>
                             </a>
                         </li>
-                        <li class="side-nav-item">
-                            <a href="{{ route('posts.index') }}" class="side-nav-link"><i class="uil-calender"></i>
-                                <span> Posta </span>
+                        
+                       
+                        <li class="side-nav-item mm-active">
+                            <a href="javascript: void(0);" class="side-nav-link" aria-expanded="true">
+                                <i class="uil-store"></i>
+                                <span> Posts </span>
+                                <span class="menu-arrow"></span>
                             </a>
+                            <ul class="side-nav-second-level mm-collapse mm-show" aria-expanded="false" style="">
+                            	<li>
+                                    <a href="{{ route('posts.index') }}" >
+		                                <span>All Posts </span>
+		                            </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('posts.create') }}" >
+		                                <span> Add Post </span>
+		                            </a>
+                                </li>
+                            </ul>
                         </li>
 
                     </ul>

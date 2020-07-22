@@ -15,9 +15,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/','Frontend\FrontendController@homePage')->name('homepage');
 
-Route::get('/posts','Frontend\FrontendController@posts')->name('postspage');
-Route::get('/posts/{name}','Frontend\FrontendController@postPage')->name('postdetails');
-
 Route::get('/login','Backend\AuthController@loginForm')->name('loginForm');
 Route::post('/login','Backend\AuthController@login');
 
