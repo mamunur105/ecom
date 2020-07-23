@@ -18,6 +18,8 @@ Route::get('/','Frontend\FrontendController@homePage')->name('homepage');
 Route::get('/login','Backend\AuthController@loginForm')->name('loginForm');
 Route::post('/login','Backend\AuthController@login');
 
+Route::get('/user/{id}','Backend\AuthController@userpost')->name('postbyuser');
+
 Route::get('/registration','Backend\AuthController@registrationForm')->name('registrationForm');
 Route::post('/registration','Backend\AuthController@register');
 

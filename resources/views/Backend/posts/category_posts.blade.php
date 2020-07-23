@@ -105,7 +105,7 @@
                                         <td>
                                             <a href="{{ route('category.show',$categories->id)}}">{{ $categories->name }}</a>
                                         </td>
-                                        <td>{{ $post->user->name }}</td>
+                                        <td> <a href="{{ route('postbyuser',$post->user->id)}}">{{ $post->user->name }}</a></td>
                                         <td>{{ $post->status }}</td>
                                         <td>
                                             <div class="d-flex">

@@ -4,7 +4,6 @@
 
 @section('stylesheet')       
     <!-- third party css -->
-    <!-- <link href="{{ asset('assets/backend/css/vendor/dataTables.bootstrap4.css') }}" rel="stylesheet" type="text/css" /> -->
     <link href="{{ asset('assets/backend/css/vendor/responsive.bootstrap4.css') }}" rel="stylesheet" type="text/css" />
     <!-- third party css end -->
     <!-- App css -->
@@ -18,18 +17,6 @@
     <script src="{{ asset('assets/backend/js/vendor.min.js')}}"></script>
     <script src="{{ asset('assets/backend/js/app.min.js')}}"></script>
     <!-- third party js -->
-<!--     <script src="{{ asset('assets/backend/js/vendor/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('assets/backend/js/vendor/dataTables.bootstrap4.js') }}"></script>
-    <script src="{{ asset('assets/backend/js/vendor/dataTables.responsive.min.js') }}"></script>
-    <script src="{{ asset('assets/backend/js/vendor/responsive.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('assets/backend/js/vendor/dataTables.checkboxes.min.js') }}"></script> -->
-    <!-- third party js ends -->
-    <!-- demo app -->
-    <!-- <script src="{{ asset('assets/backend/js/pages/demo.products.js') }}"></script> -->
-    <script>
-        // $('#products-datatable').DataTable();
-    </script>
-    <!-- end demo js-->
 @endsection
 
 @section('content')
@@ -111,14 +98,14 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($posts as $post)
+                                    @foreach($postbyuser->posts as $post)
                                     <tr>
                                         <td><img width="80px"  src="{{ $post->thumbnail_path }}" alt=""></td>
                                         <td>{{ $post->title }}</td>
                                         <td>
                                             <a href="{{ route('category.show',$post->category->id)}}">{{ $post->category->name }}</a>
                                         </td>
-                                        <td> <a href="{{ route('postbyuser',$post->user->id)}}">{{ $post->user->name }}</a></td>
+                                        <td> <a href="{{ route('postbyuser',$postbyuser->id)}}">{{ $postbyuser->name }}</a></td>
                                         <td>{{ $post->status }}</td>
                                         <td>
                                             <div class="d-flex">
@@ -140,11 +127,10 @@
                                         </td>
                                     </tr>
                                     @endforeach
-
-
                                 </tbody>
                             </table>
-                            {!! $posts->links() !!}
+                           
+
                         </div>
                     </div> <!-- end card-body-->
                 </div> <!-- end card-->
