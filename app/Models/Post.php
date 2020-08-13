@@ -20,6 +20,12 @@ class Post extends Model
         'status',
     ];
 
+    protected $dates = [
+        'created_at'
+        
+    ];
+
+
     public function category(){
         return $this->belongsTo(Category::class,'category_id');
     }

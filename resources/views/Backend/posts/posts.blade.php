@@ -107,6 +107,7 @@
                                         <th>Category</th>
                                         <th>Author</th>
                                         <th>Status</th>
+                                        <th>Date</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -119,7 +120,9 @@
                                             <a href="{{ route('category.show',$post->category->id)}}">{{ $post->category->name }}</a>
                                         </td>
                                         <td> <a href="{{ route('postbyuser',$post->user->id)}}">{{ $post->user->name }}</a></td>
+                                        
                                         <td>{{ $post->status }}</td>
+                                        <td>{{ $post->created_at->format('F j, Y') }}</td>
                                         <td>
                                             <div class="d-flex">
                                                 <span>

@@ -15,7 +15,8 @@ class PostController extends Controller
     public function index()
     {
         $data = [] ;
-        $data['posts'] = Post::with('category','user')->select('id','user_id','category_id','title','content','thumbnail_path','status')->paginate(10);
+        
+        $data['posts'] = Post::with('category','user')->select('id','user_id','category_id','title','content','thumbnail_path','status','created_at')->paginate(10);
         return view('Backend.posts.posts')->with($data);
     }
 
