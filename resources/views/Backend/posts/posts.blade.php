@@ -122,7 +122,7 @@
                                         <td> <a href="{{ route('postbyuser',$post->user->id)}}">{{ $post->user->name }}</a></td>
                                         
                                         <td>{{ $post->status }}</td>
-                                        <td>{{ $post->created_at->format('F j, Y') }}</td>
+                                        <td> {{-- $post->created_at->format('F j, Y') --}} {{ $post->created_at->diffForHumans() }} </td>
                                         <td>
                                             <div class="d-flex">
                                                 <span>
@@ -147,7 +147,7 @@
 
                                 </tbody>
                             </table>
-                            {!! $posts->links() !!}
+                            <!-- {--!! $posts->links() !!--} -->
                         </div>
                     </div> <!-- end card-body-->
                 </div> <!-- end card-->

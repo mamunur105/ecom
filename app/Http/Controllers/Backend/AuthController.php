@@ -102,12 +102,12 @@ class AuthController extends Controller
 		}
 	
 	}
-    function userpost($id){
-    	$data = [] ;
-    	$data['postbyuser'] = User::with('posts','posts.category')->select('id','name')->find($id);
-    	// dd($data);
-    	return view('Backend.posts.user_posts')->with($data);
-    }
+    // function userpost($id){
+    // 	$data = [] ;
+    // 	$data['postbyuser'] = User::with('posts','posts.category')->select('id','name')->find($id);
+    // 	// dd($data);
+    // 	return view('Backend.posts.user_posts')->with($data);
+    // }
 	function dashboard(){
 		$data = [];
 		$data['user'] = Auth::user();

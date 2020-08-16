@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Category;
-use App\Models\Post;
+// use App\Models\Post;
 class CategoryController extends Controller
 {
     function index(){
@@ -49,18 +49,13 @@ class CategoryController extends Controller
 		}
     }
 
-    function show($id){
-    	$data = [] ;
-    	$data['categories'] = Category::with('posts','posts.user')->select('id','name','slug')->find($id);
-    	return view('Backend.posts.category_posts')->with($data);
-    }
-
-    //  function show($id){
+    // function show($id){
     // 	$data = [] ;
-    // 	$data['posts'] = Post::with('category','user')->select('id','user_id','category_id','title','content','thumbnail_path','status')->where('category_id', $id)->paginate(10);
-    //     return view('Backend.posts.posts')->with($data);
+    // 	$data['categories'] = Category::with('posts','posts.user')->select('id','name','slug')->find($id);
+    // 	return view('Backend.posts.category_posts')->with($data);
     // }
 
+	// {{ $post->created_at->format('F j, Y') }} 
 
     function edit( $id ){
     	$data = [] ;

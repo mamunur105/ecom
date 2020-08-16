@@ -69,14 +69,14 @@
                                             <label for="project-overview">Category</label>
                                             <select name="category" class="form-control select2" data-toggle="select2" value="{{ old('category') }}">
                                                 <option>---Select---</option>
-                                                <option value="AZ">Mary Scott</option>
-                                                <option value="CO">Holly Campbell</option>
-                                                <option value="ID">Beatrice Mills</option>
-                                                <option value="MT">Melinda Gills</option>
-                                                <option value="NE">Linda Garza</option>
-                                                <option value="NM">Randy Ortez</option>
-                                                <option value="ND">Lorene Block</option>
-                                                <option value="UT">Mike Baker</option>
+                                                <option value="1">Mary Scott</option>
+                                                <option value="2">Holly Campbell</option>
+                                                <option value="3">Beatrice Mills</option>
+                                                <option value="4">Melinda Gills</option>
+                                                <option value="5">Linda Garza</option>
+                                                <option value="6">Randy Ortez</option>
+                                                <option value="7">Lorene Block</option>
+                                                <option value="8">Mike Baker</option>
                                             </select>   
                                         </div>
                                         <div class="form-group ">
@@ -87,7 +87,7 @@
                                             </select>   
                                         </div>
                                         <div class="form-group mt-3 mt-xl-0">
-                                            <label for="projectname" class="">Avatar</label><input name="file" type="file" />
+                                            <label for="projectname" class="">Avatar</label><input name="photo" type="file" />
                                         </div>
                                         <div class="form-group ">
                                             <button type="submit" class="btn btn-primary">Update Post</button>

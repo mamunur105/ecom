@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Post;
+use Illuminate\Support\Facades\Auth;
+// use Illuminate\Support\Facades\Redis;
+// use Illuminate\Support\Facades\Cache;
+
 class PostController extends Controller
 {
     /**
@@ -12,11 +16,31 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index(){
         $data = [] ;
-        
-        $data['posts'] = Post::with('category','user')->select('id','user_id','category_id','title','content','thumbnail_path','status','created_at')->paginate(10);
+        // $data['posts'] = Post::with('category','user')->select('id','user_id','category_id','title','content','thumbnail_path','status','created_at')->orderBy('created_at', 'DESC')->paginate(10);
+       
+        $data['posts'] =  cache('posts', function(){
+            // return Post::with('category','user')->select('id','user_id','category_id','title','content','thumbnail_path','status','created_at')->orderBy('created_at', 'DESC')->paginate(10);
+            return Post::with('category','user')->select('id','user_id','category_id','title','content','thumbnail_path','status','created_at')->orderBy('created_at', 'DESC')->take(10)->get();
+        });
+        // print_r(cache('posts'));
+        // dd();
+        // $data['posts'] = Post::with('category','user')->select('id','user_id','category_id','title','content','thumbnail_path','status','created_at')->orderBy('created_at', 'DESC')->take(10)->get();
+        return view('Backend.posts.posts')->with($data);
+    }
+
+    function postByCat($id){
+    	$data = [] ;
+    	$data['posts'] = Post::with('category','user')->select('id','user_id','category_id','title','content','thumbnail_path','status','created_at')->where('category_id', $id)->orderBy('created_at', 'DESC')->paginate(10);
+        return view('Backend.posts.posts')->with($data);
+    }
+
+    function userPost($id){
+    	$data = [] ;
+        // $data['postbyuser'] = Post::with('posts','posts.category')->select('id','name')->find($id);
+        $data['posts'] = Post::with('category','user')->select('id','user_id','category_id','title','content','thumbnail_path','status','created_at')->where('user_id', $id)->orderBy('created_at', 'DESC')->paginate(10);
+        // dd($data);
         return view('Backend.posts.posts')->with($data);
     }
 
@@ -25,8 +49,7 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create(){
         // die();
         return view('Backend.posts.post_add');
     }
@@ -37,9 +60,39 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request){
+        // $post_data = $request->all();
+        // print_r(Auth::id());
+        // die();
+        if (!Auth::check()) {
+            $this->setErrorMessage("Login again");
+            return redirect()->back();
+        }
+        $data = [
+            'user_id' => Auth::id(),
+            'category_id' => $request->input('category'),
+            'title' => $request->input('title'),
+            'content' => $request->input('content'),
+            'status' => $request->input('status'),
+        ];
+        
+        if ($request->hasFile('photo')) {
+            $photo_file = $request->file('photo');
+            $file_modify_name = $this->setFileName($photo_file);
+            $photo_file->storeAs('images', $file_modify_name);
+            $data['thumbnail_path'] = $file_modify_name;
+        }    
+        try{
+			Post::create($data);
+			$this->setSuccessMessage('Post created');
+			return redirect()->route('posts.index');
+
+		}catch(Exception $e){
+			
+			$this->setErrorMessage($e->getMessage());
+			return redirect()->back();
+		}
+        return redirect()->route('posts.index');
     }
 
     /**

@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\Events\PostCreated;
+use App\Events\PostDeleted;
+use App\Events\PostUpdated;
 class Post extends Model
 {
     /**
@@ -20,11 +22,22 @@ class Post extends Model
         'status',
     ];
 
-    protected $dates = [
-        'created_at'
+    // protected $dates = [
+    //     'created_at'
         
-    ];
+    // ];
 
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'created' => PostCreated::class,
+        'updated' => PostUpdated::class,
+        'deleted' => PostDeleted::class,
+    ];
+    
 
     public function category(){
         return $this->belongsTo(Category::class,'category_id');

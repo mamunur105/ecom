@@ -18,7 +18,6 @@ Route::get('/','Frontend\FrontendController@homePage')->name('homepage');
 Route::get('/login','Backend\AuthController@loginForm')->name('loginForm');
 Route::post('/login','Backend\AuthController@login');
 
-Route::get('/user/{id}','Backend\AuthController@userpost')->name('postbyuser');
 
 Route::get('/registration','Backend\AuthController@registrationForm')->name('registrationForm');
 Route::post('/registration','Backend\AuthController@register');
@@ -34,7 +33,6 @@ Route::get('/dashbord','Backend\AuthController@dashboard')->name('dashbord');
 
 Route::get('/category','Backend\CategoryController@index')->name('category.index');
 Route::post('/category/add','Backend\CategoryController@create')->name('category.add');
-Route::get('/category/{id}/','Backend\CategoryController@show')->name('category.show');
 Route::get('/category/{id}/edit','Backend\CategoryController@edit')->name('category.edit');
 Route::put('/category/{id}','Backend\CategoryController@update')->name('category.update');
 Route::delete('/category/{id}','Backend\CategoryController@delete')->name('category.delete');
@@ -42,5 +40,7 @@ Route::delete('/category/{id}','Backend\CategoryController@delete')->name('categ
 
 
 Route::resource('/posts','Backend\PostController');
+Route::get('/posts/category/{id}/','Backend\PostController@postByCat')->name('category.show');
+Route::get('/posts/user/{id}','Backend\PostController@userPost')->name('postbyuser');
 
 
