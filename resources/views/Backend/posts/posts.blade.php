@@ -131,10 +131,10 @@
                                                     </a>
                                                 </span>
                                                 <span>
-                                                    <form method="post" action="{{ route('posts.destroy',$post->id) }}">
+                                                    <form method="post"  action="{{ route('posts.destroy',$post->id) }}">
                                                         @csrf
                                                         @method('delete')
-                                                        <button type="submit" class="btn btn-danger">
+                                                        <button type="submit" onclick="alert('Make sure')" class="btn btn-danger">
                                                             <i class="mdi mdi-delete"></i>
                                                         </button>
                                                     </form>
@@ -147,7 +147,7 @@
 
                                 </tbody>
                             </table>
-                            <!-- {--!! $posts->links() !!--} -->
+                            
                         </div>
                     </div> <!-- end card-body-->
                 </div> <!-- end card-->

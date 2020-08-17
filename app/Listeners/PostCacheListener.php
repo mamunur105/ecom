@@ -28,6 +28,8 @@ class PostCacheListener
 
         cache()->forget('posts');
         $posts =  Post::with('category','user')->select('id','user_id','category_id','title','content','thumbnail_path','status','created_at')->orderBy('created_at', 'DESC')->take(10)->get();
+       
+        // return 
         cache()->forever('posts',$posts);
         // info(cache('posts'));
 

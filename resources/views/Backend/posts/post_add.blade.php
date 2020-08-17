@@ -50,6 +50,34 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
+                        <div class="add-new col-md-12">   
+
+                            @if(session()->has('message'))
+                                <div class="alert alert-{{ session('type') }}">
+                                    {{ session('message') }}
+                                </div>
+                            @endif
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    @if(2 > count($errors->all()))
+
+                                        @foreach ($errors->all() as $error)
+                                            {{ $error }}
+                                        @endforeach
+
+                                    @else
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    @endif
+                                    
+                                </div>
+                            @endif
+
+
+                            </div>
                             <form action="{{ route('posts.store') }}" method="post">
                                 @csrf
                             
