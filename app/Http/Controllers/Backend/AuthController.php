@@ -82,6 +82,7 @@ class AuthController extends Controller
 			'state' => $request->input('choosestate') ,
 			'zipcode' => $request->input('zipcode') ,
 			'password' => bcrypt($request->input('password')) ,	
+			'email_verification_token' => str_random(32) ,	
 		];
 		if ($request->hasFile('photo')) {
 			$photo_file = $request->file('photo');
