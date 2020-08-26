@@ -90,6 +90,7 @@ class AuthController extends Controller
 			$photo_file->storeAs('images', $file_modify_name);
 			$data['photo'] = $file_modify_name;
 		}
+		
 		try{
 			User::create($data);
 			$this->setSuccessMessage('User account created');
