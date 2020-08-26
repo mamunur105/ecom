@@ -11,7 +11,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Support\Str;
 class AuthController extends Controller
 {
 
@@ -82,7 +82,7 @@ class AuthController extends Controller
 			'state' => $request->input('choosestate') ,
 			'zipcode' => $request->input('zipcode') ,
 			'password' => bcrypt($request->input('password')) ,	
-			'email_verification_token' => str_random(32) ,	
+			'email_verification_token' => Str::random(32) ,	
 		];
 		if ($request->hasFile('photo')) {
 			$photo_file = $request->file('photo');
