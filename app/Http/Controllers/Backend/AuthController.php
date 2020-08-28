@@ -112,7 +112,9 @@ class AuthController extends Controller
 
     public function verification($token)
     {
-        print_r($token);
+        if (!$token) {
+
+        }
 
     }
     // function userpost($id){
