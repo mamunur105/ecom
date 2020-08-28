@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\VerificationEmail;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -39,6 +40,12 @@ class AuthController extends Controller
 
         $credentials = $request->except(['_token']);
         if (auth()->attempt($credentials)) {
+            $user = auth()->user();
+            if ($user->email_verified === 0) {
+                $this->setErrorMessage('Your Account is not varified. Please verify your email');
+                auth()->logout();
+                return redirect()->route('loginForm');
+            }
             return redirect()->route('dashbord');
         }
         $this->setErrorMessage('Login Invalid');
@@ -49,7 +56,7 @@ class AuthController extends Controller
     {
         auth()->logout();
         $this->setSuccessMessage('User has been loged out');
-        return redirect()->route('login');
+        return redirect()->route('loginForm');
     }
 
     public function registrationForm()
@@ -97,7 +104,8 @@ class AuthController extends Controller
 
         try {
             $user = User::create($data);
-            Mail::to($user->email)->send(new VerificationEmail($user));
+            //Mail::to($user->email)->send(new VerificationEmail($user)); // Mail send by php
+            Mail::to($user->email)->queue(new VerificationEmail($user)); // Mail send by Redis (Mail send but It's not working for me)
             $this->setSuccessMessage('User account created');
             return redirect()->route('loginForm');
 
@@ -113,7 +121,22 @@ class AuthController extends Controller
     public function verification($token)
     {
         if (!$token) {
-
+            $this->setErrorMessage('Invalid Token');
+            return redirect()->route('loginForm');
+        }
+        $user = User::where('email_verification_token', $token)->first();
+        if (!$user) {
+            $this->setErrorMessage('Invalid Token');
+            return redirect()->route('loginForm');
+        }
+        $updated = $user->update([
+            'email_verified' => 1,
+            'email_verified_at' => Carbon::now(),
+            'email_verification_token' => '',
+        ]);
+        if ($updated) {
+            $this->setSuccessMessage('Registration sucessfully done');
+            return redirect()->route('loginForm');
         }
 
     }
