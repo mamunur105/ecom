@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use App\Notifications\VarifyEmail;
 
 class AuthController extends Controller
 {
@@ -105,7 +106,8 @@ class AuthController extends Controller
         try {
             $user = User::create($data);
             //Mail::to($user->email)->send(new VerificationEmail($user)); // Mail send by php
-            Mail::to($user->email)->queue(new VerificationEmail($user)); // Mail send by Redis (Mail send but It's not working for me)
+            // Mail::to($user->email)->queue(new VerificationEmail($user)); // Mail send by Redis (Mail send but It's not working for me)
+            $user->notify( new VarifyEmail($user) );
             $this->setSuccessMessage('User account created');
             return redirect()->route('loginForm');
 
@@ -135,7 +137,7 @@ class AuthController extends Controller
             'email_verification_token' => '',
         ]);
         if ($updated) {
-            $this->setSuccessMessage('Registration sucessfully done');
+            $this->setSuccessMessage('Verification sucessfully done');
             return redirect()->route('loginForm');
         }
 

@@ -6,19 +6,20 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use App\Models\User;
 
-class VarifyEmail extends Notification
+class VarifyEmail extends Notification implements ShouldQueue 
 {
     use Queueable;
-
+    private $user ;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(User $user)
     {
-        //
+        $this->user = $user;
     }
 
     /**
@@ -32,7 +33,7 @@ class VarifyEmail extends Notification
         return ['mail'];
     }
 
-    /**
+   /**
      * Get the mail representation of the notification.
      *
      * @param  mixed  $notifiable
@@ -40,9 +41,13 @@ class VarifyEmail extends Notification
      */
     public function toMail($notifiable)
     {
+        $url = route('verification', $this->user->email_verification_token );
+
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
+                    ->greeting('Hello!')
+                    ->line($this->user->name)
+                    ->line('Your Account has been Created Successfully ') 
+                    ->action('Verify Account', $url)
                     ->line('Thank you for using our application!');
     }
 
