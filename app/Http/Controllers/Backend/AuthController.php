@@ -70,13 +70,14 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'useremail' => 'required|email|unique:users,email',
+            'phone_number' => 'required|string|min:11|max:16|unique:users,phone_number',
             'photo' => 'image|max:10240',
-            'password' => 'required|min:6|confirmed',
-
+            'password' => 'required|min:6|confirmed'
         ], [
             'name.required' => 'Name is required.',
             'useremail.required' => 'Email is required',
             'password.required' => 'Password is required',
+            'phone_number.required' => 'Phone number is required',
         ]);
 
         if ($validator->fails()) {
@@ -89,6 +90,7 @@ class AuthController extends Controller
         $data = [
             'name' => $request->input('name'),
             'email' => strtolower(trim($request->input('useremail'))),
+            'phone_number' => trim($request->input('phone_number')),
             'address' => $request->input('address'),
             'city' => $request->input('city'),
             'state' => $request->input('choosestate'),
@@ -96,6 +98,7 @@ class AuthController extends Controller
             'password' => bcrypt($request->input('password')),
             'email_verification_token' => Str::random(32),
         ];
+        
         if ($request->hasFile('photo')) {
             $photo_file = $request->file('photo');
             $file_modify_name = $this->setFileName($photo_file);

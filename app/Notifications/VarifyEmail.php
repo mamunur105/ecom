@@ -8,6 +8,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use App\Models\User;
 
+
 class VarifyEmail extends Notification implements ShouldQueue 
 {
     use Queueable;
@@ -30,7 +31,7 @@ class VarifyEmail extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['mail','nexmo'];
     }
 
    /**
@@ -49,6 +50,18 @@ class VarifyEmail extends Notification implements ShouldQueue
                     ->line('Your Account has been Created Successfully ') 
                     ->action('Verify Account', $url)
                     ->line('Thank you for using our application!');
+    }
+
+    /**
+     * Get the Nexmo / SMS representation of the notification.
+     *
+     * @param  mixed  $notifiable
+     * @return NexmoMessage
+     */
+    public function toNexmo($notifiable)
+    {
+        return (new NexmoMessage)
+                    ->content('Dear '.$this->user->name.', Your account is registered  ');
     }
 
     /**
