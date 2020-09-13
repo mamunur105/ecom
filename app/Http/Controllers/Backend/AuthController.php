@@ -111,6 +111,10 @@ class AuthController extends Controller
             //Mail::to($user->email)->send(new VerificationEmail($user)); // Mail send by php
             // Mail::to($user->email)->queue(new VerificationEmail($user)); // Mail send by Redis (Mail send but It's not working for me)
             $user->notify( new VarifyEmail($user) );
+
+            // $admin = User::find(15);
+            // $admin->notify( new NotifyAdmin($user) );
+
             $this->setSuccessMessage('User account created');
             return redirect()->route('loginForm');
 

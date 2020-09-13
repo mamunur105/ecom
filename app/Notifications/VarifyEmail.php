@@ -73,7 +73,7 @@ class VarifyEmail extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
-            //
+            'username' => $this->user->name
         ];
     }
 }

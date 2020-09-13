@@ -289,7 +289,7 @@
 				                        <img src="{{ asset('assets/backend/images/users/avatar-1.jpg')}}" alt="user-image" class="rounded-circle">
 				                    </span>
 				                    <span>
-				                        <span class="account-user-name">Dominic Keller</span>
+				                        <span class="account-user-name">{{ $user->name }}</span>
 				                        <span class="account-position">Founder</span>
 				                    </span>
 				                </a>
