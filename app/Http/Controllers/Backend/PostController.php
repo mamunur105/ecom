@@ -19,7 +19,7 @@ class PostController extends Controller
     public function index(){
         $data = [] ;
         // $data['posts'] = Post::with('category','user')->select('id','user_id','category_id','title','content','thumbnail_path','status','created_at')->orderBy('created_at', 'DESC')->paginate(10);
-       
+        $data['user'] = Auth::user();
         $data['posts'] =  cache('posts', function(){
             // return Post::with('category','user')->select('id','user_id','category_id','title','content','thumbnail_path','status','created_at')->orderBy('created_at', 'DESC')->paginate(10);
             return Post::with('category','user')->select('id','user_id','category_id','title','content','thumbnail_path','status','created_at')->orderBy('created_at', 'DESC')->take(10)->get();
